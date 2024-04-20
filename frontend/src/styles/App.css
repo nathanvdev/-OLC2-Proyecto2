@@ -1,0 +1,21 @@
+.item-0{
+  height:5%;
+  width:auto;
+}
+      
+.item-1{
+  height:8%;
+  width:auto;
+}
+      
+.item-2{
+  height: 80vh;
+  border-radius: 30px;
+  background-color: rgb(39, 39, 39);
+}
+
+.item-2-images{
+  height: auto;
+  border-radius: 30px;
+  background-color: rgb(39, 39, 39);
+}
