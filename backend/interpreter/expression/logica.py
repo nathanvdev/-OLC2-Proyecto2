@@ -1,6 +1,5 @@
 from ..abstract.expression import expression
-from .primitive import Primitive
-from ..abstract.types import ExpressionType
+
 
 class Logica(expression):
     def __init__(self, line, column, left, right, operator):

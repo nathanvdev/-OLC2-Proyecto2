@@ -2,14 +2,6 @@ from ..abstract.expression import expression
 from ..abstract.types import ExpressionType
 from ..abstract.value import Value
 
-dominant_table = [
-    [ExpressionType.INTEGER,    ExpressionType.FLOAT,   ExpressionType.NULL,    ExpressionType.NULL,    ExpressionType.NULL],
-    [ExpressionType.FLOAT,      ExpressionType.FLOAT,   ExpressionType.NULL,    ExpressionType.NULL,    ExpressionType.NULL],
-    [ExpressionType.NULL,       ExpressionType.NULL,    ExpressionType.STRING,  ExpressionType.NULL,    ExpressionType.NULL],
-    [ExpressionType.NULL,       ExpressionType.NULL,    ExpressionType.NULL,    ExpressionType.NULL,    ExpressionType.NULL],
-    [ExpressionType.NULL,       ExpressionType.NULL,    ExpressionType.NULL,    ExpressionType.NULL,    ExpressionType.NULL],
-]
-
 
 class Aritmetic(expression):
     def __init__(self, line, column, left, right, operator):

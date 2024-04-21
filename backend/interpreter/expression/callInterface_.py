@@ -1,6 +1,5 @@
 from ..abstract.expression import expression
-from ..expression.primitive import Primitive
-from ..abstract.types import ExpressionType
+
 
 
 class callInterface_(expression):

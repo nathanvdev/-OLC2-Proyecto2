@@ -1,5 +1,4 @@
 from ..abstract.instruction import instruction
-from ..abstract.types import ExpressionType
 
 class AssignArr_(instruction):
     def __init__(self, line, column, id_, expression, expression2):

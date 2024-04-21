@@ -1,5 +1,4 @@
 from ..abstract.instruction import instruction
-from ..abstract.types import ExpressionType
 
 class Switch_(instruction):
     def __init__(self, line, column, expression_, cases_, default_):

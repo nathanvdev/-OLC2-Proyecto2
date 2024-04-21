@@ -1,6 +1,5 @@
 from ..abstract.expression import expression
-from .primitive import Primitive
-from ..abstract.types import ExpressionType
+
 
 
 

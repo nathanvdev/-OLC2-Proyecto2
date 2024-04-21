@@ -1,6 +1,6 @@
 from ..abstract.instruction import instruction
 from ..abstract.environment import Environment
-from ..abstract.variables import Variables
+
 
 
 class DeclareInterface_(instruction):

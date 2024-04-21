@@ -1,5 +1,5 @@
 from ..abstract.instruction import instruction
-from ..abstract.types import ExpressionType
+
 
 class Return_(instruction):
     def __init__(self, line, column, expression):

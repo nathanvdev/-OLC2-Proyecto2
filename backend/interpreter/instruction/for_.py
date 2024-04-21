@@ -1,8 +1,7 @@
 from ..abstract.instruction import instruction
 from ..abstract.environment import Environment
 from ..expression.primitive import Primitive
-from ..abstract.types import ExpressionType
-import copy
+
 
 
 class for_(instruction):

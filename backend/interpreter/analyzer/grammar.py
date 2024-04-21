@@ -8,7 +8,7 @@ from ..expression.relational import Relational
 from ..expression.logica import Logica
 from ..instruction.declareVar_ import DeclareVar_
 from ..instruction.assignVar_ import AssignVar_
-from ..instruction.find_variable import FindVariable
+from ..expression.access import Access
 from ..instruction.if_else import If_else
 from ..instruction.while_ import while_
 from ..instruction.for_ import for_
@@ -586,7 +586,7 @@ def p_funcEmbebida(p):
     elif len(p) == 5:
         p[0] = funcEmbebidas_(tmp.line, tmp.column, p[1], p[3])
     elif len(p) == 6:
-        tmp43 = FindVariable(tmp.line, tmp.column, p[1])
+        tmp43 = Access(tmp.line, tmp.column, p[1])
         p[0] = funcEmbebidas_(tmp.line, tmp.column, p[3], tmp43)
     elif len(p) == 3:
         p[0] = funcEmbebidas_(tmp.line, tmp.column, p[1], p[2])
@@ -624,7 +624,7 @@ def p_id_(p):
 
     tmp = get_params(p)
     if len(p) == 2:
-        p[0] = FindVariable(tmp.line, tmp.column, p[1])
+        p[0] = Access(tmp.line, tmp.column, p[1])
     elif len(p) == 5:
         p[0] = ArrayFuncs_(tmp.line, tmp.column, p[1], 'Find', p[3])
 

@@ -1,6 +1,4 @@
 from ..abstract.instruction import instruction
-from ..abstract.types import ExpressionType
-from ..instruction.return_ import Return_
 
 class DeclareFunction_(instruction):
     def __init__(self,line, column, id_, params, returnType, instructions):
