@@ -1,8 +1,6 @@
 class Value:
-    def __init__(self, value, isTemp, Type, truelvl, falselvl, outlvl ):
+    def __init__(self, value, pos, Type, isTemp):
         self.value = value
-        self.isTemp = isTemp
+        self.pos = pos
         self.Type = Type
-        self.truelvl = truelvl
-        self.falselvl = falselvl
-        self.outlvl = outlvl
+        self.isTemp = isTemp

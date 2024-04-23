@@ -1,11 +1,11 @@
-
 class Generator:
     def __init__(self):
-        self.Temporal = 0
+        self.Temporal = 0x10000000
         self.Label = 0
         self.Code = []
         self.Data = []
         self.FinalCode = []
+        #### eliminar
         self.Natives = []
         self.FuncCode = []
         self.TempList = []
@@ -88,6 +88,12 @@ class Generator:
         self.Code[:0] = self.Data
             
     def add_footers(self):
-        self.Code.append('\n\tli a0, 0\n')
+        self.add_br()
+        self.comment("End of the program")
+        self.Code.append('\tli a0, 0\n')
         self.Code.append('\tli a7, 93\n')
         self.Code.append('\tecall\n')
+
+
+
+

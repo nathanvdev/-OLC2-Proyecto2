@@ -1,9 +1,10 @@
 
 class Symbol():
-    def __init__(self, line, col, id, type, position):
+    def __init__(self, line, col, id, value, position, Type):
         self.line = line
         self.col = col
         self.id = id
-        self.Type = type
-        self.position = position
+        self.value = value
+        self.pos = position
+        self.Type = Type
     

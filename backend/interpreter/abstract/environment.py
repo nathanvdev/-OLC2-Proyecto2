@@ -139,7 +139,7 @@ class Environment():
             else:
                 tmpEnv = tmpEnv.previous
         # ast.setErrors(f"La variable {id} no existe.")
-        return Symbol(0, 0, '', ExpressionType.NULL, '')
+        return Symbol(-1, -1, '', 0, '', ExpressionType.NULL)
     
     def SaveArray(self, line, column, newArray):
         globalenv = self.GetGlobal()

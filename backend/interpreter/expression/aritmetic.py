@@ -11,48 +11,33 @@ class Aritmetic(expression):
         self.operator = operator
 
     def Eject(self, env, gen):
-         # Ejecución de operandos
-        op1 = self.left.Eject(env, gen)
-        op2 = self.right.Eject(env, gen)
-
-        gen.add_br()
-        gen.comment('Realizando operacion')
-        if 't' in str(op1.value):
-            gen.add_move('t3', str(op1.value))
-        else:
-            gen.add_li('t3', str(op1.value))
-        #gen.add_li('t3', str(op1.value))
-        gen.add_lw('t1', '0(t3)')
-        if 't' in str(op2.value):
-            gen.add_move('t3', str(op2.value))
-        else:
-            gen.add_li('t3', str(op2.value)) 
-        #gen.add_li('t3', str(op2.value))
-        gen.add_lw('t2', '0(t3)')
+         
+        op1, op2 = self.left.Eject(env, gen), self.right.Eject(env, gen)
         temp = gen.new_temp()
 
-        if self.operator == "+":
-            gen.add_operation('add', 't0', 't1', 't2')
-            gen.add_li('t3', str(temp))
-            gen.add_sw('t0', '0(t3)')
-            return  Value(str(temp), True, ExpressionType.INTEGER, [], [], [])
-    
-        if self.operator == "-":
-            gen.add_operation('sub', 't0', 't1', 't2')
-            gen.add_li('t3', str(temp))
-            gen.add_sw('t0', '0(t3)')
-            return  Value(str(temp), True, ExpressionType.INTEGER, [], [], [])
-        
-        if self.operator == "*":
-            gen.add_operation('mul', 't0', 't1', 't2')
-            gen.add_li('t3', str(temp))
-            gen.add_sw('t0', '0(t3)')
-            return  Value(str(temp), True, ExpressionType.INTEGER, [], [], [])
-        
-        if self.operator == "/":
-            gen.add_operation('div', 't0', 't1', 't2')
-            gen.add_li('t3', str(temp))
-            gen.add_sw('t0', '0(t3)')
-            return  Value(str(temp), True, ExpressionType.INTEGER, [], [], [])
-        
-        return None
+        gen.add_br()
+        gen.comment("Aritmetic operation")
+
+        for op, reg in zip([op1, op2], ['t1', 't2']):
+            if op.pos == -1:
+                gen.add_li(reg, op.value)
+            else:
+                gen.add_li('t0', op.pos)
+                gen.add_lw(reg, '0(t0)')
+
+        operations = {
+            "+": 'add',
+            "-": 'sub',
+            "*": 'mul',
+            "/": 'div',
+            "%": 'rem'
+        }
+
+        if self.operator in operations:
+            gen.add_operation(operations[self.operator], 't0', 't1', 't2')
+
+        gen.add_li('t3', temp)
+        gen.add_sw('t0', '0(t3)')
+
+        return Value(0, str(temp), ExpressionType.INTEGER, False)
+            

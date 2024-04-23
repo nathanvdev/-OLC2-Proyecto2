@@ -12,5 +12,5 @@ class Access(instruction):
         sym = env.getVariable(self.name)
         if(sym.Type != ExpressionType.NULL):
             # Reconstrucción de Value
-            return Value(sym.position, False, sym.Type, [], [], [])
-        return Value('', False, ExpressionType.NULL, [], [], [])
+            return Value(sym.value, sym.pos, sym.Type, False)
+        return Value(-1, -1, ExpressionType.NULL, False)

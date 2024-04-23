@@ -10,17 +10,19 @@ class Primitive(expression):
         self.tmpType = Type
 
     def Eject(self, env, gen):
-        temp = gen.new_temp()
         if(self.tmpType == ExpressionType.INTEGER):
-            gen.add_br()
-            gen.comment('Agregando un primitivo numerico')
-            gen.add_li('t0', str(self.value))
-            gen.add_li('t3', str(temp))
-            gen.add_sw('t0', '0(t3)')
-            return  Value(str(temp), True, self.tmpType, [], [], [])
+            return  Value(self.value, -1, self.tmpType, False)
         
         elif (self.tmpType == ExpressionType.STRING):
+            temp = gen.new_temp()
             nameId = 'str_'+str(temp)
             gen.variable_data(nameId, 'string', '\"'+str(self.value)+'\"')
-            return  Value(nameId, False, self.tmpType, [], [], [])
+            return  Value(self.value, nameId, self.tmpType, False)
+        
+        elif (self.tmpType == ExpressionType.BOOLEAN):
+            if self.value == True:
+                return  Value(1, -1, self.tmpType, True)
+            
+            elif self.value == False:
+                return  Value(0, -1, self.tmpType, True)
  
