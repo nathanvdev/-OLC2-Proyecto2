@@ -59,4 +59,5 @@ class Print(instruction):
         gen.add_li('a0', '10')
         gen.add_li('a7', '11')
         gen.add_system_call()
+        
         return None

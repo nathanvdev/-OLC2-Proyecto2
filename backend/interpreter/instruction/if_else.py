@@ -13,6 +13,7 @@ class If_else(instruction):
         tmp = gen.new_temp()
         result = self.condition.Eject(env, gen)
         env.envsCount += 1
+        gen.add_br()
         gen.comment('IF Sentence')
 
         if result.pos == -1:
