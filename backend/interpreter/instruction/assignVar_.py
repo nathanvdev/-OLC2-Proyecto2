@@ -18,16 +18,28 @@ class AssignVar_(instruction):
         gen.add_li('t0', str(var.pos))
 
         if self.op == '=':
-            gen.add_li('t1', str(result.value))
+            if result.pos == -1:
+                gen.add_li('t1', str(result.value))
+            else:
+                gen.add_li('t1', str(result.pos))
+                gen.add_lw('t1', '0(t1)')
 
         elif self.op == '+=':
             gen.add_lw('t1', '0(t0)')
-            gen.add_li('t2', str(result.value))
+            if result.pos == -1:
+                gen.add_li('t2', str(result.value))
+            else:
+                gen.add_li('t2', str(result.pos))
+                gen.add_lw('t2', '0(t2)')
             gen.add_operation('add', 't1', 't1', 't2')
 
         elif self.op == '-=':
             gen.add_lw('t1', '0(t0)')
-            gen.add_li('t2', str(result.value))
+            if result.pos == -1:
+                gen.add_li('t2', str(result.value))
+            else:
+                gen.add_li('t2', str(result.pos))
+                gen.add_lw('t2', '0(t2)')
             gen.add_operation('sub', 't1', 't1', 't2')
 
         gen.add_sw('t1', '0(t0)')

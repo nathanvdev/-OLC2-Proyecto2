@@ -36,6 +36,8 @@ class Aritmetic(expression):
         if self.operator in operations:
             gen.add_operation(operations[self.operator], 't0', 't1', 't2')
 
+        
+
         gen.add_li('t3', temp)
         gen.add_sw('t0', '0(t3)')
 

@@ -8,5 +8,7 @@ class Switch_(instruction):
         self.default = default_
 
 
-    def Eject(self, env):
-        pass
+    def Eject(self, env, gen):
+        
+        
+        return None

@@ -29,12 +29,30 @@ class Print(instruction):
                 gen.add_system_call()
 
             elif (val.Type == ExpressionType.BOOLEAN):
-                if val.value == 1:
-                    gen.add_la('a0', 'TRUExd')
+                tmp = gen.new_temp()
+
+                if val.pos == -1:
+                    gen.add_li('t1', val.value)
                 else:
-                    gen.add_la('a0', 'FALSExd')
+                    gen.add_li('t0', val.pos)
+                    gen.add_lw('t1', '0(t0)')
+
+                gen.add_operation('beq', 't1', 'x0', "prntF"+str(tmp))
+                gen.add_la('a0', 'TRUExd')
                 gen.add_li('a7', '4')
                 gen.add_system_call()
+                gen.add_jump('fin'+str(tmp))
+                gen.add_br()
+
+                gen.add_funcName("prntF"+str(tmp))
+                gen.add_la('a0', 'FALSExd')
+                gen.add_li('a7', '4')
+                gen.add_system_call()
+                gen.add_jump('fin'+str(tmp))
+                gen.add_br()
+
+                gen.add_funcName('fin'+str(tmp))
+                gen.add_br()
 
         gen.add_br()
         gen.comment('salto de linea')

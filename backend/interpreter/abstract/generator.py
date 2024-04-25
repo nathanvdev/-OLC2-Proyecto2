@@ -94,6 +94,12 @@ class Generator:
         self.Code.append('\tli a7, 93\n')
         self.Code.append('\tecall\n')
 
+    def add_funcName(self, name):
+        self.Code.append(f"{name}:\n")
+
+    def add_jump(self, label):
+        self.Code.append(f"\tj {label}\n")
+
 
 
 
