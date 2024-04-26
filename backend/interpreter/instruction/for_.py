@@ -15,8 +15,11 @@ class for_(instruction):
 
 
     def Eject(self, env:Environment, gen):
-        newEnv = Environment(env, f'{env.envsCount}-for')
         tmp = gen.new_temp()
+        newEnv = Environment(env, f'{env.envsCount}-for')
+        newEnv.break_ =  "finFor_"+str(tmp)
+        newEnv.continue_ = "incrementFor_"+str(tmp)
+
         assing = self.assignment.Eject(newEnv, gen)
         
         gen.add_br()
@@ -34,20 +37,23 @@ class for_(instruction):
 
         for inst in self.instructions:
             inst.Eject(newEnv, gen)
-
+        
+        gen.add_br()
+        gen.add_funcName('incrementFor_'+str(tmp))
+        gen.comment('Increment For')
         if assing.pos == -1:
             gen.add_li("t1", assing.value)
         else:
             gen.add_li('t0', assing.pos)
             gen.add_lw("t1", '0(t0)')
-
         gen.add_li('t2', 1)
         if self.op == '+':
-            gen.add_operation('add', 't1', 't1', 't1')
+            gen.add_operation('add', 't1', 't1', 't2')
         elif self.op == '-':
-            gen.add_operation('sub', 't1', 't1', 't1')
+            gen.add_operation('sub', 't1', 't1', 't2')
         gen.add_sw('t1', '0(t0)')
         gen.add_jump('startFor_'+str(tmp))
+
         gen.add_br()
         gen.add_funcName('finFor_'+str(tmp))
         return None

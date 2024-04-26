@@ -30,11 +30,15 @@ class Aritmetic(expression):
             "-": 'sub',
             "*": 'mul',
             "/": 'div',
-            "%": 'rem'
+            "%": 'rem',
+            'UMINUS': 'neg'
         }
 
         if self.operator in operations:
-            gen.add_operation(operations[self.operator], 't0', 't1', 't2')
+            if self.operator == 'UMINUS':
+                gen.add_operation('neg', 't0', 't1','')
+            else:
+                gen.add_operation(operations[self.operator], 't0', 't1', 't2')
 
         
 

@@ -16,7 +16,7 @@ class DeclareArr_(instruction):
         for var in self.expression_list:
             value = var.Eject(env, gen)
             newArr.append(value.value)
-        tmpValue = Value(newArr, False, ExpressionType.ARRAY, [], [], [])
+        tmpValue = Value(newArr, 0, ExpressionType.ARRAY, False)
     
         temp = gen.new_temp()
 

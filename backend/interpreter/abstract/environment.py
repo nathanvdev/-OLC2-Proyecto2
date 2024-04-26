@@ -13,6 +13,8 @@ class Environment():
         self.envsCount = 0
         self.Errors = []
         self.Symbols = []
+        self.break_ = ''
+        self.continue_ = ''
 
     def saveVariable(self, id, symbol):
         if id in self.variables:
@@ -31,7 +33,7 @@ class Environment():
             else:
                 tmpEnv = tmpEnv.previous
         # ast.setErrors(f"La variable {id} no existe.")
-        return Symbol(0, 0, None, ExpressionType.NULL)
+        return Symbol(symbol.line, symbol.col, symbol.id, symbol.value, symbol.position, ExpressionType.NULL)
 
     def AssignVariable(self, line, column, name, op, value):
         globalenv = self.GetGlobal()
@@ -273,3 +275,19 @@ class Environment():
         }
         globalenv.Errors.append(newError)
         print(f'Error: Function {id_} not found')
+
+    def getBreak(self):
+        env = self
+        while env != None:
+            if env.break_ != '':
+                return env.break_
+            env = env.previous
+        return ''
+    
+    def getContinue(self):
+        env = self
+        while env != None:
+            if env.continue_ != '':
+                return env.continue_
+            env = env.previous
+        return ''

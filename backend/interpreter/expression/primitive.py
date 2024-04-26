@@ -25,4 +25,17 @@ class Primitive(expression):
             
             elif self.value == False:
                 return  Value(0, -1, self.tmpType, True)
+            
+        elif (self.tmpType == ExpressionType.BREAK):
+            tmp = env.getBreak()
+            if tmp != "":
+                gen.add_jump(tmp)
+            return None
+        
+        elif (self.tmpType == ExpressionType.CONTINUE):
+            tmp = env.getContinue()
+            if tmp != "":
+                gen.add_jump(tmp)
+            return None
+        
  

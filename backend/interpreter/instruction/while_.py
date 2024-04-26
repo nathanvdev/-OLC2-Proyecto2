@@ -10,7 +10,10 @@ class while_(instruction):
 
 
     def Eject(self, env, gen):
+        newEnv = Environment(env, f'{env.envsCount}-while')
         tmp = gen.new_temp()
+        newEnv.break_ =  "finWhile_"+str(tmp)
+        newEnv.continue_ = "startWhile_"+str(tmp)
         gen.add_br()
         gen.comment('While Sentence')
         gen.add_funcName('startWhile_'+str(tmp))
@@ -25,7 +28,6 @@ class while_(instruction):
 
         gen.add_operation('beq', 't1', 'x0', "finWhile_"+str(tmp))
         env.envsCount += 1
-        newEnv = Environment(env, f'{env.envsCount}-while')
 
         for inst in self.instructions:
             inst.Eject(newEnv, gen)
