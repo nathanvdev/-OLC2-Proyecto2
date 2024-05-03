@@ -53,6 +53,27 @@ class Print(instruction):
 
                 gen.add_funcName('fin'+str(tmp))
                 gen.add_br()
+            
+            elif (val.Type == ExpressionType.ARRAY):
+                gen.add_la('a0', 'COR_A')
+                gen.add_li('a7', '4')
+                gen.add_system_call()
+
+                for index, tmp in enumerate(val.pos):
+                    gen.add_li('t0', tmp)
+                    gen.add_lw('a0', '0(t0)')
+                    gen.add_li('a7', '1')
+                    gen.add_system_call()
+
+                    if index < len(val.pos) - 1:
+                        gen.add_la('a0', 'COMMA')
+                        gen.add_li('a7', '4')
+                        gen.add_system_call()
+                
+                gen.add_la('a0', 'COR_C')
+                gen.add_li('a7', '4')
+                gen.add_system_call()
+                
 
         gen.add_br()
         gen.comment('salto de linea')

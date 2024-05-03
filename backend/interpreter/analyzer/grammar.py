@@ -725,11 +725,10 @@ def p_arraysExpression(p):
                         | ID DOT RLENGTH'''
     
     tmp = get_params(p)
-    if len(p) == 4:
-        p[0] = ArrayFuncs_(tmp.line, tmp.column, p[1], p[3], None)
-    else:
+    if p[3] == 'indexOf':
         p[0] = ArrayFuncs_(tmp.line, tmp.column, p[1], p[3], p[5])
-
+    else:
+        p[0] = ArrayFuncs_(tmp.line, tmp.column, p[1], p[3], None)
 
 
 def p_boolean(p):

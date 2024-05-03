@@ -10,30 +10,48 @@ class ArrayFuncs_(instruction):
         self.expression = expression
 
     def Eject(self, env, gen):
-        if self.FuncType == "Find":
-           # Traer el arreglo
-            sym = env.getVariable(self.id_)
-            if(sym.Type == ExpressionType.NULL):
-                # ast.setErrors(f"El arreglo {self.array} no ha sido encontrado")
-                return None
-            # Validar tipo principal
+        # Traer el arreglo
+        sym = env.getVariable(self.id_)
+        if(sym.Type == ExpressionType.NULL):
+            # ast.setErrors(f"El arreglo {self.array} no ha sido encontrado")
+            return None
+        # Validar tipo principal
+        if self.expression != None:
             expression = self.expression.Eject(env, gen)
             if expression.Type != ExpressionType.INTEGER:
                 # ast.setErrors('El indice contiene un valor incorrecto')
                 return None
+
+        if self.FuncType == "Find":
+           
             # Agregar llamada
             gen.add_br()
             gen.comment('Acceso a un arreglo')
-            if 't' in str(expression.value):
-                gen.add_move('t3', str(expression.value))
-            else:
-                gen.add_li('t3', str(expression.value))
-            gen.add_lw('t1', '0(t3)')
-            gen.add_move('t0', 't1')
-            gen.add_slli('t0', 't0', '2')
-            gen.add_la('t1', str(sym.position))
 
-            gen.add_lw('t1', '0(t1)')
+            for i in range(len(sym.pos)):
+                if i == expression.value:
+                    return Value(sym.value[i], sym.pos[i], ExpressionType.INTEGER, False)
+                
+        elif self.FuncType == 'push':
+            tmp = gen.new_temp()
+            gen.add_li('t0', str(expression.value))
+            gen.add_li('t3', str(tmp))
+            gen.add_sw('t0', '0(t3)')
+            sym.value.append(expression.value)
+            sym.pos.append(tmp)
+            return None
+            
+        elif self.FuncType == 'pop':
+            tmpval = sym.value.pop()
+            tmppos = sym.pos.pop()
+            return Value(tmpval, tmppos, ExpressionType.INTEGER, False)
+        
+        elif self.FuncType == 'indexOf':
+            for i in range(len(sym.value)):
+                if sym.value[i] == expression.value:
+                    return Value(i, -1, ExpressionType.INTEGER, False)
 
-            gen.add_operation('add', 't2', 't1', 't0')
-            return Value('t2', True, sym.Type, [], [], [])
+            return Value(-1, -1, ExpressionType.INTEGER, False)
+        
+        elif self.FuncType == 'length':
+            return Value(len(sym.value), -1, ExpressionType.INTEGER, False)

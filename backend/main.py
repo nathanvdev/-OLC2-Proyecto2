@@ -26,7 +26,7 @@ def home():
 def send_command():
     GlobalEnvironment = Environment(None, 'Global')
     gen = Generator()
-    add_booleanTxt(gen, GlobalEnvironment)
+    add_Defaults(gen, GlobalEnvironment)
 
 
     if not request.json or 'code_in' not in request.json:
@@ -69,7 +69,7 @@ def reports():
     }
     return jsonify(result)
 
-def add_booleanTxt(gen, env):
+def add_Defaults(gen, env):
     nameId = "TRUExd"
     gen.variable_data(nameId, 'string', '\"'+"true"+'\"')
     sym = Symbol(-1, -1, nameId, 1, nameId, ExpressionType.STRING)
@@ -80,6 +80,20 @@ def add_booleanTxt(gen, env):
     sym2 = Symbol(-1, -1, nameId2, 1, nameId2, ExpressionType.STRING)
     env.saveVariable(nameId2, sym2)
 
+    nameId3 = "COR_A"
+    gen.variable_data(nameId3, 'string', '\"'+"[ "+'\"')
+    sym2 = Symbol(-1, -1, nameId3, 1, nameId3, ExpressionType.STRING)
+    env.saveVariable(nameId3, sym2)
+
+    nameId4 = "COR_C"
+    gen.variable_data(nameId4, 'string', '\"'+" ]"+'\"')
+    sym2 = Symbol(-1, -1, nameId4, 1, nameId4, ExpressionType.STRING)
+    env.saveVariable(nameId4, sym2)
+
+    nameId5 = "COMMA"
+    gen.variable_data(nameId5, 'string', '\"'+", "+'\"')
+    sym2 = Symbol(-1, -1, nameId5, 1, nameId5, ExpressionType.STRING)
+    env.saveVariable(nameId5, sym2)
 
 
 if __name__ == "__main__":
